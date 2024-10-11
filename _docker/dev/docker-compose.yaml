@@ -1,0 +1,38 @@
+name: portalcmj4
+services:
+  cmj4front:
+    build:
+      context: ../../.
+      dockerfile: _docker/dev/Dockerfile.Dev.Front
+    restart: no
+    container_name: cmj4front
+    labels:
+       NAME: "cmj4front"
+    volumes:
+      - ../../.:/var/cmjatai/cmj
+    networks:
+      - cmj4-net
+    ports:
+      - "127.0.0.1:5173:5173"
+  cmj4:
+    build:
+      context: ../../.
+      dockerfile: _docker/dev/Dockerfile.Dev
+    container_name: cmj4
+    user: "root:root"
+    labels:
+      NAME: "cmj4"
+    restart: no
+    volumes:
+      - /mnt/volumes/cmj_media:/var/cmjatai/cmj_media
+      - ../../.:/var/cmjatai/cmj
+    depends_on:
+      - cmj4front
+    ports:
+      - "127.0.0.1:9000:9000"
+    networks:
+      - cmj4-net
+networks:
+  cmj4-net:
+    name: cmj4-net
+    driver: bridge
