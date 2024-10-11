@@ -1,15 +1,16 @@
-
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
+PROJECT_DIR = BASE_DIR.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-q+p_nap98iul0#c%fbdx@n$p5g9cb&eud&#0fpiz4^fx^#vxmf"
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -23,8 +24,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_vite",
+
     "core",
-    "django_vite"
 ]
 
 MIDDLEWARE = [
@@ -42,7 +44,7 @@ ROOT_URLCONF = "cmj4.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "_templates"],
+        "DIRS": [PROJECT_DIR / "_templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -65,7 +67,7 @@ WSGI_APPLICATION = "cmj4.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": PROJECT_DIR / "db.sqlite3",
     }
 }
 
@@ -105,7 +107,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "_frontend"]
+STATICFILES_DIRS = [PROJECT_DIR / "_frontend"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -113,13 +115,17 @@ STATICFILES_DIRS = [BASE_DIR / "_frontend"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Where ViteJS assets are built.
-DJANGO_VITE_ASSETS_PATH = BASE_DIR / "_frontend" / "dist"
+DJANGO_VITE_ASSETS_PATH = PROJECT_DIR / "_frontend" / "dist"
 
-# If use HMR or not.
-DJANGO_VITE_DEV_MODE = DEBUG
+DJANGO_VITE = {
+  "default": {
+    "dev_mode": config("DJANGO_VITE_DEV_MODE", default=True, cast=bool),
+    "manifest_path": DJANGO_VITE_ASSETS_PATH / '.vite' / 'manifest.json'
+  }
+}
 
 # Name of static files folder (after called python manage.py collectstatic)
-STATIC_ROOT = BASE_DIR / "collectedstatic"
+STATIC_ROOT = PROJECT_DIR / "collectedstatic"
 
 # Include DJANGO_VITE_ASSETS_PATH into STATICFILES_DIRS to be copied inside
 # when run command python manage.py collectstatic
