@@ -5,8 +5,8 @@ import {resolve} from 'path'
 export default defineConfig((mode) => {
 
   // const env = loadEnv(mode, process.cwd(), '')
-  // const OUTPUT_DIR = './static/dist'
-  const INPUT_DIR = './static/src'
+  const OUTPUT_DIR = './_frontend/dist'
+  const INPUT_DIR = './_frontend/src'
 
   return {
     plugins: [
@@ -31,14 +31,14 @@ export default defineConfig((mode) => {
       },
     },
     build: {
-      outDir: resolve('./static/dist'),
+      outDir: resolve(OUTPUT_DIR),
       assetsDir: '',
       manifest: true,
       emptyOutDir: true,
       target: 'es2015',
       rollupOptions: {
         input: {
-          main: resolve('./static/src/js/main.js'),
+          main: resolve(`${INPUT_DIR}/js/main.js`),
         },
         output: {
           chunkFileNames: undefined,

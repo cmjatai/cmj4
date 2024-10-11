@@ -216,3 +216,4 @@ security.json
 *.ntvs*
 *.njsproj
 *.sln
+../cmj/.gitignore
