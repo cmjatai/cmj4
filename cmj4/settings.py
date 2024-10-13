@@ -1,10 +1,14 @@
 from pathlib import Path
-from decouple import config
+from decouple import AutoConfig
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
-
 PROJECT_DIR = BASE_DIR.parent
+
+config = AutoConfig(search_path=PROJECT_DIR)
+
+CMJ4_TESTE = config('CMJ4_TESTE')
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
@@ -26,7 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_vite",
 
-    "core",
+    "cmj4.core",
 ]
 
 MIDDLEWARE = [

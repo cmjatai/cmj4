@@ -1,0 +1,85 @@
+name: portalcmj4
+services:
+  cmj4redis:
+    image: redis:bookworm
+    container_name: cmj4redis
+    restart: always
+    labels:
+       NAME: "cmj4redis"
+    volumes:
+      - c4redis_data:/data
+    #ports:
+    #  - "6379:6379"
+    networks:
+      - cmj4-net
+  cmj4solr:
+    image: solr:9.7
+    restart: always
+    command: bin/solr start -c -f
+    container_name: cmj4solr
+    labels:
+        NAME: "cmj4solr"
+    volumes:
+      - c4solr9_data:/var/solr
+      - c4solr9_configsets:/opt/solr/server/solr/configsets
+    #ports:
+    #  - "8983:8983"
+    networks:
+      - cmj4-net
+  cmj4db:
+    image: postgres:17.0-bookworm
+    restart: always
+    container_name: cmj4postgres
+    labels:
+        NAME: "cmj4postgres"
+    environment:
+      POSTGRES_PASSWORD: cmj4
+      POSTGRES_USER: cmj4
+      POSTGRES_DB: cmj4
+      PGDATA : /var/lib/postgresql/data/
+    volumes:
+      - cmj4db_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+    networks:
+      - cmj4-net
+  cmj4:
+    build:
+      context: ../../.
+      dockerfile: _docker/prod/Dockerfile
+    container_name: cmj4
+    user: "root:root"
+    labels:
+       NAME: "cmj4"
+    restart: always
+    environment:
+      DEBUG: 'False'
+      USE_SOLR: 'True'
+      SOLR_COLLECTIONS: portalcmj4_cmj,portalcmj4_arq
+      SOLR_URL: http://solr:solr@cmj4solr:8983
+      IS_ZK_EMBEDDED: 'True'
+      TZ: America/Sao_Paulo
+    volumes:
+      - cmj4_data:/var/cmjatai/cmj_data
+      - cmj4_media:/var/cmjatai/cmj_media
+      - cmj4_logs:/var/cmjatai/cmj4/logs
+    depends_on:
+      - cmj4db
+      - cmj4redis
+      - cmj4solr
+    ports:
+      - "8001:80"
+    networks:
+      - cmj4-net
+networks:
+  cmj4-net:
+    name: cmj4-net
+    driver: bridge
+volumes:
+  cmj4db_data:
+  cmj4_data:
+  cmj4_media:
+  cmj4_logs:
+  c4solr9_data:
+  c4solr9_configsets:
+  c4redis_data:

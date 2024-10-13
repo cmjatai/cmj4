@@ -19,7 +19,6 @@ services:
       context: ../../.
       dockerfile: _docker/dev/Dockerfile.Dev
     container_name: cmj4
-    user: "root:root"
     labels:
       NAME: "cmj4"
     restart: no
