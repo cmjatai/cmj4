@@ -22,8 +22,8 @@ services:
     volumes:
       - c4solr9_data:/var/solr
       - c4solr9_configsets:/opt/solr/server/solr/configsets
-    #ports:
-    #  - "8983:8983"
+    ports:
+      - "8983:8983"
     networks:
       - cmj4-net
   cmj4db:

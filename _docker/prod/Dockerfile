@@ -69,21 +69,24 @@ RUN mkdir -p /var/cmjatai/BD_POSTGRESQL
 
 WORKDIR /var/cmjatai/cmj4/
 
-COPY po* $HOME
-COPY py* $HOME
 ENV POETRY_VIRTUALENVS_CREATE=false
 RUN pip3 install poetry
+
+COPY po* $HOME
+COPY py* $HOME
 RUN poetry install
 
 #ADD drfautoapi  /var/cmjatai/cmj4/drfautoapi
 #ADD fonts       /var/cmjatai/cmj4/fonts
 #ADD scripts     /var/cmjatai/cmj4/scripts
+#ADD sapl        /var/cmjatai/cmj4/sapl
+
+ADD _docker      /var/cmjatai/cmj4/_docker
 ADD _frontend   /var/cmjatai/cmj4/_frontend
 ADD _templates  /var/cmjatai/cmj4/_templates
+
 ADD cmj4         /var/cmjatai/cmj4/cmj4
-#ADD sapl        /var/cmjatai/cmj/sapl
-#ADD solr        /var/cmjatai/cmj/solr
-ADD _docker      /var/cmjatai/cmj4/_docker
+ADD solr        /var/cmjatai/cmj4/solr
 
 COPY .env $HOME
 COPY manage.py $HOME
