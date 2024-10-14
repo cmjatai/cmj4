@@ -50,8 +50,8 @@ RUN apt-get install -y -q $LIBRE_PACKAGES
 RUN fc-cache -fv && \
     pip3 install --no-cache-dir --upgrade pip setuptools
 
-RUN adduser --home=/var/cmjatai/cmj --disabled-password --gecos "" --shell=/bin/bash cmj
-RUN mkdir -p /var/cmjatai/cmj
+RUN adduser --home=/var/cmjatai/cmj4 --disabled-password --gecos "" --shell=/bin/bash cmj
+RUN mkdir -p /var/cmjatai/cmj4
 RUN mkdir -p /var/cmjatai/cmj_dev
 RUN mkdir -p /var/cmjatai/cmj_media
 
@@ -62,12 +62,12 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 RUN pip3 install poetry
 RUN poetry install -C /var/cmjatai/cmj_dev/
 
-WORKDIR /var/cmjatai/cmj/
+WORKDIR /var/cmjatai/cmj4/
 
 ENV DEBIAN_FRONTEND teletype
 
 EXPOSE 9000/tcp
 
-VOLUME ["/var/cmjatai/cmj_media", "/var/cmjatai/cmj"]
+VOLUME ["/var/cmjatai/cmj_media", "/var/cmjatai/cmj4"]
 
-CMD ["/var/cmjatai/cmj/_docker/dev/start-dev.sh"]
+CMD ["/var/cmjatai/cmj4/_docker/dev/start-dev.sh"]

@@ -17,13 +17,13 @@ ENV GROUP_ID=${GROUP_ID:-1001}
 RUN addgroup --gid ${GROUP_ID} ${GROUP_NAME}
 RUN adduser --disabled-password --gecos '' --uid ${USER_ID} --ingroup ${GROUP_NAME} ${USER_NAME}
 
-RUN mkdir -p /var/cmjatai/cmj
-RUN chown -R leandro:leandro /var/cmjatai/cmj
+RUN mkdir -p /var/cmjatai/cmj4
+RUN chown -R leandro:leandro /var/cmjatai/cmj4
 
-WORKDIR /var/cmjatai/cmj
+WORKDIR /var/cmjatai/cmj4
 
 EXPOSE 5173/tcp
 
-VOLUME ["/var/cmjatai/cmj"]
+VOLUME ["/var/cmjatai/cmj4"]
 
-CMD ["/var/cmjatai/cmj/startfront-dev.sh"]
+CMD ["/var/cmjatai/cmj4/startfront-dev.sh"]
