@@ -48,6 +48,9 @@ ENV LIBRE_PACKAGES libreoffice \
                     fonts-tlwg-purisa
 RUN apt-get install -y -q $LIBRE_PACKAGES
 
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
+    apt-get install -y nodejs
+
 RUN fc-cache -fv && \
     pip3 install --no-cache-dir --upgrade pip setuptools
 
@@ -71,25 +74,25 @@ WORKDIR /var/cmjatai/cmj4/
 
 ENV POETRY_VIRTUALENVS_CREATE=false
 RUN pip3 install poetry
-
 COPY po* $HOME
 COPY py* $HOME
 RUN poetry install
 
-#ADD drfautoapi  /var/cmjatai/cmj4/drfautoapi
-#ADD fonts       /var/cmjatai/cmj4/fonts
-#ADD scripts     /var/cmjatai/cmj4/scripts
-#ADD sapl        /var/cmjatai/cmj4/sapl
-
-ADD _docker      /var/cmjatai/cmj4/_docker
+ADD _docker     /var/cmjatai/cmj4/_docker
 ADD _frontend   /var/cmjatai/cmj4/_frontend
 ADD _templates  /var/cmjatai/cmj4/_templates
 
-ADD cmj4         /var/cmjatai/cmj4/cmj4
+ADD cmj4        /var/cmjatai/cmj4/cmj4
 ADD solr        /var/cmjatai/cmj4/solr
 
 COPY .env $HOME
 COPY manage.py $HOME
+COPY package-lock.json $HOME
+COPY package.json $HOME
+COPY vite.config.js $HOME
+
+RUN npm install
+RUN npm run build
 
 RUN python3 manage.py collectstatic --noinput --clear --settings=cmj4.settings
 

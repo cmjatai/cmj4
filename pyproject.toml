@@ -16,6 +16,8 @@ django-vite = "^3.0.5"
 django-extensions = "^3.2.3"
 python-decouple = "^3.8"
 gunicorn = "^23.0.0"
+kazoo = "^2.10.0"
+twisted = {extras = ["http2", "tls"], version = "^24.7.0"}
 
 
 [build-system]
