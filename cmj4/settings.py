@@ -7,14 +7,14 @@ PROJECT_DIR = BASE_DIR.parent
 
 config = AutoConfig(search_path=PROJECT_DIR)
 
-CMJ4_TESTE = config('CMJ4_TESTE')
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
+
+FOLDER_DEBUG_CONTAINER = Path(config('FOLDER_DEBUG_CONTAINER', default=__file__, cast=str))
 
 ALLOWED_HOSTS = ['*']
 
@@ -28,7 +28,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "django_vite",
+    'django_celery_beat',
+    'django_celery_results',
 
     "cmj4.core",
 ]
@@ -134,3 +137,33 @@ STATIC_ROOT = PROJECT_DIR / "collectedstatic"
 # Include DJANGO_VITE_ASSETS_PATH into STATICFILES_DIRS to be copied inside
 # when run command python manage.py collectstatic
 STATICFILES_DIRS = [DJANGO_VITE_ASSETS_PATH]
+
+REDIS_HOST = config('REDIS_HOST', cast = str, default = 'cmj4redis')
+REDIS_PORT = config('REDIS_PORT', cast=int, default=6379)
+
+
+if DEBUG:
+    if FOLDER_DEBUG_CONTAINER != PROJECT_DIR:
+        REDIS_HOST = 'localhost'
+
+CELERY_BROKER_URL = 'redis://{}:{}'.format(REDIS_HOST, REDIS_PORT)
+
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+
+
+CACHES = {
+    #'default': {
+    #    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+    #    'LOCATION': '/var/tmp/django_cache',
+    #}
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache' if not DEBUG else 'django.core.cache.backends.dummy.DummyCache',
+        'LOCATION': 'unique-snowflake',
+    }
+    #"default": {
+    #    "BACKEND": "django.core.cache.backends.redis.RedisCache",
+    #    "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}",
+    #}
+}

@@ -51,7 +51,7 @@ RUN fc-cache -fv && \
     pip3 install --no-cache-dir --upgrade pip setuptools
 
 RUN adduser --home=/var/cmjatai/cmj4 --disabled-password --gecos "" --shell=/bin/bash cmj
-RUN mkdir -p /var/cmjatai/cmj4
+RUN mkdir -p /var/cmjatai/cmj4/logs/celery
 RUN mkdir -p /var/cmjatai/cmj_dev
 RUN mkdir -p /var/cmjatai/cmj_media
 

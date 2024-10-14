@@ -45,4 +45,7 @@ else
     echo "Solr support is not initialized."
 fi
 
+rm /var/cmjatai/cmj4/logs/celery/*.pid
+celery multi start 5 -A cmj4 -l INFO -Q:1 cq_arq -Q:2 cq_core -Q:3 cq_videos -Q:4 cq_base -Q:5 celery -c 2 --hostname=cmj4redis --pidfile=./logs/celery/%n.pid --logfile=./logs/celery/%n%I.log
+
 yes yes | python3 manage.py runserver 0.0.0.0:9000
