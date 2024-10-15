@@ -25,6 +25,7 @@ django-celery-results = "^2.5.1"
 psycopg = "^3.2.3"
 dj-database-url = "^2.2.0"
 ipython = "^8.28.0"
+pyyaml = "^6.0.2"
 
 
 [build-system]
