@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import AutoConfig
+from dj_database_url import parse as db_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
@@ -72,11 +73,12 @@ WSGI_APPLICATION = "cmj4.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": PROJECT_DIR / "db.sqlite3",
-    }
+    'default': config(
+        'DATABASE_URL_DEV' if DEBUG else 'DATABASE_URL_PRD',
+        cast=db_url,
+    )
 }
+
 
 
 # Password validation

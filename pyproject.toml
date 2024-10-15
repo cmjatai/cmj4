@@ -22,6 +22,8 @@ redis = "^5.1.1"
 celery = "^5.4.0"
 django-celery-beat = "^2.7.0"
 django-celery-results = "^2.5.1"
+psycopg = "^3.2.3"
+dj-database-url = "^2.2.0"
 
 
 [build-system]
