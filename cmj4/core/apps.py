@@ -13,6 +13,7 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         AppConfig.ready(self)
+        from . import signals
 
         # ATENÇÃO:
         # péssimo local para chamar uma task...

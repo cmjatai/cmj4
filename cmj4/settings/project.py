@@ -26,6 +26,9 @@ FOLDER_DEBUG_CONTAINER = Path(config('FOLDER_DEBUG_CONTAINER', default=__file__,
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -102,9 +105,10 @@ USE_TZ = True
 
 DJANGO_VITE_ASSETS_PATH = PROJECT_DIR / "_frontend" / "dist"
 DJANGO_VITE_DEV_MODE = config("DJANGO_VITE_DEV_MODE", default=True, cast=bool)
+DJANGO_VITE_DEV_MODE = DJANGO_VITE_DEV_MODE and DEBUG
 DJANGO_VITE = {
   "default": {
-    "dev_mode": DJANGO_VITE_DEV_MODE and DEBUG,
+    "dev_mode": DJANGO_VITE_DEV_MODE,
     "manifest_path": DJANGO_VITE_ASSETS_PATH / '.vite' / 'manifest.json'
   }
 }
@@ -129,6 +133,14 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(REDIS_HOST, REDIS_PORT)],
+        },
+    },
+}
 
 CACHES = {
     #'default': {
