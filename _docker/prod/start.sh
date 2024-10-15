@@ -19,6 +19,7 @@ IS_ZK_EMBEDDED="${IS_ZK_EMBEDDED:=True}"
 
 if [ "${USE_SOLR-False}" == "True" ] || [ "${USE_SOLR-False}" == "true" ]; then
 
+    echo " "
     echo "Solr configurations"
     echo "==================="
     echo "URL: $SOLR_URL"

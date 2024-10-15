@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django_extensions',
 
     "django_vite",
     'django_celery_beat',
@@ -142,8 +143,6 @@ STATICFILES_DIRS = [DJANGO_VITE_ASSETS_PATH]
 
 REDIS_HOST = config('REDIS_HOST', cast = str, default = 'cmj4redis')
 REDIS_PORT = config('REDIS_PORT', cast=int, default=6379)
-
-
 if DEBUG:
     if FOLDER_DEBUG_CONTAINER != PROJECT_DIR:
         REDIS_HOST = 'localhost'
