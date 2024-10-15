@@ -1,5 +1,4 @@
 FROM python:3.12.7-bookworm
-#FROM python:3.10-slim-buster
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
@@ -11,6 +10,7 @@ ENV BUILD_PACKAGES apt-utils apt-file libpq-dev graphviz-dev build-essential pkg
                    python3-dev libxml2-dev libjpeg-dev libssl-dev libffi-dev libxslt1-dev \
                    libcairo2-dev software-properties-common python3-setuptools python3-pip \
                    procps nmap
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends $BUILD_PACKAGES

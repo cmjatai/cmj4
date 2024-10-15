@@ -10,6 +10,7 @@ ENV BUILD_PACKAGES apt-utils apt-file libpq-dev graphviz-dev build-essential pkg
                    python3-dev libxml2-dev libjpeg-dev libssl-dev libffi-dev libxslt1-dev \
                    libcairo2-dev software-properties-common python3-setuptools python3-pip \
                    procps nmap
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends $BUILD_PACKAGES
@@ -50,19 +51,17 @@ RUN apt-get install -y -q $LIBRE_PACKAGES
 RUN fc-cache -fv && \
     pip3 install --no-cache-dir --upgrade pip setuptools
 
-RUN adduser --home=/var/cmjatai/cmj4 --disabled-password --gecos "" --shell=/bin/bash cmj
 RUN mkdir -p /var/cmjatai/cmj4/logs/celery
 RUN mkdir -p /var/cmjatai/cmj_dev
 RUN mkdir -p /var/cmjatai/cmj_media
 
+WORKDIR /var/cmjatai/cmj4/
+
+ENV POETRY_VIRTUALENVS_CREATE=false
+RUN pip3 install poetry
 COPY po* /var/cmjatai/cmj_dev/poetry.lock
 COPY py* /var/cmjatai/cmj_dev/pyproject.toml
-ENV POETRY_VIRTUALENVS_CREATE=false
-
-RUN pip3 install poetry
 RUN poetry install -C /var/cmjatai/cmj_dev/
-
-WORKDIR /var/cmjatai/cmj4/
 
 ENV DEBIAN_FRONTEND teletype
 
