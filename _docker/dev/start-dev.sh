@@ -2,7 +2,10 @@
 
 echo -e "\033[38;2;255;255;0;2m\033[1m====> StartDEV...\033[0m"
 
+sed -i -E "s|^DEBUG ?= ?.+$|DEBUG = ${DEBUG:=True}|g" .env
+
 yes yes | python3 manage.py migrate
+
 
 ## SOLR
 USE_SOLR="${USE_SOLR:=False}"
@@ -11,7 +14,7 @@ SOLR_COLLECTIONS="${SOLR_COLLECTIONS:=portalcmj4_cmj}"
 NUM_SHARDS=${NUM_SHARDS:=1}
 RF=${RF:=1}
 MAX_SHARDS_PER_NODE=${MAX_SHARDS_PER_NODE:=1}
-IS_ZK_EMBEDDED="${IS_ZK_EMBEDDED:=False}"
+IS_ZK_EMBEDDED="${IS_ZK_EMBEDDED:=True}"
 
 if [ "${USE_SOLR-False}" == "True" ] || [ "${USE_SOLR-False}" == "true" ]; then
 

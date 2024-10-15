@@ -7,9 +7,9 @@ services:
     labels:
        NAME: "cmj4redis"
     volumes:
-      - c4redis_data:/data
-    #ports:
-    #  - "6379:6379"
+      - redis_data:/data
+    ports:
+      - "6379:6379"
     networks:
       - cmj4-net
   cmj4solr:
@@ -20,14 +20,14 @@ services:
     labels:
         NAME: "cmj4solr"
     volumes:
-      - c4solr9_data:/var/solr
-      - c4solr9_configsets:/opt/solr/server/solr/configsets
+      - solr9_data:/var/solr
+      - solr9_configsets:/opt/solr/server/solr/configsets
     ports:
       - "8983:8983"
     networks:
       - cmj4-net
   cmj4db:
-    image: postgres:17.0-bookworm
+    image: postgres:14.13-bookworm
     restart: always
     container_name: cmj4postgres
     labels:
@@ -38,7 +38,7 @@ services:
       POSTGRES_DB: cmj4
       PGDATA : /var/lib/postgresql/data/
     volumes:
-      - cmj4db_data:/var/lib/postgresql/data/
+      - db_data:/var/lib/postgresql/data/
     ports:
       - "5433:5432"
     networks:
@@ -76,10 +76,10 @@ networks:
     name: cmj4-net
     driver: bridge
 volumes:
-  cmj4db_data:
+  db_data:
   cmj4_data:
   cmj4_media:
   cmj4_logs:
-  c4solr9_data:
-  c4solr9_configsets:
-  c4redis_data:
+  solr9_data:
+  solr9_configsets:
+  redis_data:
