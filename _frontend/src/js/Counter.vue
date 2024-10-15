@@ -16,7 +16,7 @@ export default {
       this.count++
 
 
-    fetch('http://localhost:9000/teste')
+    fetch('/teste')
       .then(response => response.json())
       .then(data => {
         this.jresponse = `${data.id} - ${data.teste}`

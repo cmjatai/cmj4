@@ -43,7 +43,7 @@ export default {
   mounted() {
     console.log('init app')
     //connect to Sockets
-    let sockets_url = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/time-refresh/'
+    let sockets_url = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/ws/time-refresh'
     this.websocket = new WebSocket(sockets_url)
 
     this.websocket.onopen    = this.onSocketOpen;

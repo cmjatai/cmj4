@@ -21,6 +21,6 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 exec daphne \
     -u $SOCKFILE ${DJANGO_ASGI_MODULE}:application \
     --access-log /var/cmjatai/cmj4/logs/daphne_access.log \
-    -v2
+    -v1
 
 

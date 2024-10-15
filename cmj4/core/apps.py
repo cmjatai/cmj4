@@ -36,6 +36,6 @@ class CoreConfig(AppConfig):
             except:
                 pass
 
-        debug_task.apply_async(
-            args = (f'debug task enviado de core.apps.CoreConfig.ready.',),
-            countdown=5)
+        #debug_task.apply_async(
+        #    args = (f'debug task enviado de core.apps.CoreConfig.ready.',),
+        #    countdown=5)
