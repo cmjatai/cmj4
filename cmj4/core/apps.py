@@ -3,9 +3,6 @@ import inspect
 from django.apps import AppConfig
 from django.conf import settings
 
-from cmj4.celery import debug_task
-
-
 class CoreConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = 'cmj4.core'

@@ -6,6 +6,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 
 from cmj4.core.models import Teste
+from cmj4.core.tasks import debug_task
 
 
 # Create your views here.
@@ -23,8 +24,11 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def teste(request: HttpRequest) -> JsonResponse:
 
-    teste = Teste()
-    teste.teste = str(random())
-    teste.save()
+    teste = Teste.objects.order_by('id').last() or Teste()
 
-    return JsonResponse(model_to_dict(teste))
+    debug_task.apply_async((), countdown = 5)
+
+    return JsonResponse(dict(
+        message = 'ultimo cadastrado. task chamada para criar novo',
+        teste = model_to_dict(teste)
+        ))

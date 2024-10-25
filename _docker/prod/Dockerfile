@@ -94,10 +94,10 @@ COPY vite.config.js $HOME
 RUN npm install
 RUN npm run build
 
-RUN python3 manage.py collectstatic --noinput --clear --settings=cmj4.settings
+RUN python3 manage.py collectstatic --noinput --clear --settings=cmj4.settings.fake
+RUN rm -rf /var/cmjatai/cmj4/db.sqlite3
 
 #COPY key_cert.pfx $HOME
-#RUN rm -rf /var/cmjatai/cmj4/db.sqlite3
 
 COPY _docker/prod/start.sh $HOME
 COPY _docker/prod/wait-for-pg.sh $HOME

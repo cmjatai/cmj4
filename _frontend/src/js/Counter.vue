@@ -14,15 +14,14 @@ export default {
   methods: {
     clickCount() {
       this.count++
-
-
-    fetch('/teste')
-      .then(response => response.json())
-      .then(data => {
-        this.jresponse = `${data.id} - ${data.teste}`
-      })
-
-    }
+      fetch('/teste')
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          this.jresponse = `${data.message}<br>${data.teste.id} - ${data.teste.teste}`
+        })
+      }
   }
 };
 </script>
