@@ -1,17 +1,28 @@
 {
-  "name": "django-vite-starter",
+  "name": "cmj4front",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint _frontend/src/ --fix",
+    "format": "prettier --write _frontend/src/"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
     "vue": "^3.5.12"
   },
   "devDependencies": {
+    "@eslint/js": "^9.13.0",
     "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/eslint-config-prettier": "^10.0.0",
     "dotenv": "^16.4.5",
-    "vite": "^5.4.8"
+    "eslint": "^9.13.0",
+    "eslint-plugin-vue": "^9.29.1",
+    "prettier": "^3.3.3",
+    "sass": "^1.80.4",
+    "vite": "^5.4.10"
   }
 }

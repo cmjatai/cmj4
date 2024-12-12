@@ -1,16 +1,19 @@
 <template>
-    <button @click="clickCount">{{count}}</button>
-    <div v-html="jresponse"></div>
+  <button type="button" class="btn btn-primary" @click="clickCount">
+    {{ count }}
+  </button>
+  <div v-html="jresponse"></div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      count: JSON.parse(document.getElementById("initial-value").textContent),
-      jresponse: ''
+      count: JSON.parse(document.getElementById('initial-value').textContent),
+      jresponse: '',
     }
   },
+
   methods: {
     clickCount() {
       this.count++
@@ -21,7 +24,7 @@ export default {
         .then(data => {
           this.jresponse = `${data.message}<br>${data.teste.id} - ${data.teste.teste}`
         })
-      }
-  }
-};
+    },
+  },
+}
 </script>
