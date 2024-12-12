@@ -1,10 +1,10 @@
 FROM leandrojatai/building_foundation:0001
 
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED=1
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir -p /var/cmjatai/cmj4/logs/celery
 RUN mkdir -p /var/cmjatai/cmj_dev
@@ -12,11 +12,11 @@ RUN mkdir -p /var/cmjatai/cmj_media
 
 WORKDIR /var/cmjatai/cmj4/
 
-COPY po* /var/cmjatai/cmj_dev/poetry.lock
+#COPY po* /var/cmjatai/cmj_dev/poetry.lock
 COPY py* /var/cmjatai/cmj_dev/pyproject.toml
 RUN poetry install -C /var/cmjatai/cmj_dev/
 
-ENV DEBIAN_FRONTEND teletype
+ENV DEBIAN_FRONTEND=teletype
 
 EXPOSE 9000/tcp
 
