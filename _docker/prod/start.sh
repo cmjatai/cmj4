@@ -4,7 +4,22 @@ echo -e "\033[38;2;255;255;0;2m\033[1m====> StartPRD...\033[0m"
 
 #/bin/bash wait-for-pg.sh "postgresql://cmj_st1:cmj_st1@cmjdb:5432/cmj"
 
-sed -i -E "s|^DEBUG ?= ?.+$|DEBUG = ${DEBUG:=False}|g" .env
+change_env_file() {
+    echo "[ENV FILE] change .env file..."
+
+    if [ -f "/var/cmjatai/cmj_data/secret.key" ]; then
+        KEY=`cat /var/cmjatai/cmj_data/secret.key`
+    else
+        KEY=`python3 genkey.py`
+        echo $KEY > /var/cmjatai/cmj_data/secret.key
+    fi
+    sed -i -E "s/^SECRET_KEY.+$/SECRET_KEY = $KEY/g" cmj4/.env
+
+    sed -i -E "s/^DEBUG.+$/DEBUG = ${DEBUG:=False}/g" cmj4/.env
+}
+
+change_env_file
+
 
 yes yes | python3 manage.py migrate
 

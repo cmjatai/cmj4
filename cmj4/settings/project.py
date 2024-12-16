@@ -1,7 +1,6 @@
 from pathlib import Path
 from decouple import AutoConfig
 from dj_database_url import parse as db_url
-
 #from .apps import *
 #from .auth import *
 #from .drf import *
@@ -16,7 +15,7 @@ from dj_database_url import parse as db_url
 BASE_DIR = Path(__file__).parent.parent
 PROJECT_DIR = BASE_DIR.parent
 
-config = AutoConfig(search_path=PROJECT_DIR)
+config = AutoConfig(search_path=BASE_DIR)
 
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=True, cast=bool)
