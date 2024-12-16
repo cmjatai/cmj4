@@ -1,7 +1,16 @@
+{% load django_vite %}
 <!-- {% load static %}
 <link rel="stylesheet" href="{% static 'src/css/styles.css' %}"> -->
-
-<body>
+<!DOCTYPE html>
+<html class="no-js {% block html_class %}{% endblock %}" lang="pt-br">
+<head>
+  {% vite_hmr_client %}
+  {% vite_asset 'main.js' %}
+</head>
+<body class="{% block body_class %}{% endblock body_class %}">
+  {% block root_body %}
     {% block content %}
-    {% endblock %}
+    {% endblock content %}
+  {% endblock root_body %}
 </body>
+</html>

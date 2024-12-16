@@ -2,7 +2,7 @@
 
 echo -e "\033[38;2;255;255;0;2m\033[1m====> StartDEV...\033[0m"
 
-sed -i -E "s|^DEBUG ?= ?.+$|DEBUG = ${DEBUG:=True}|g" .env
+sed -i -E "s/^DEBUG.+$/DEBUG = ${DEBUG:=True}/g" cmj4/.env
 
 yes yes | python3 manage.py migrate
 

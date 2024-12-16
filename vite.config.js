@@ -41,7 +41,7 @@ export default defineConfig((mode) => {
       target: 'es2015',
       rollupOptions: {
         input: {
-          main: resolve(`${INPUT_DIR}/js/main.js`),
+          main: resolve(`${INPUT_DIR}/main.js`),
         },
         output: {
           chunkFileNames: undefined,
